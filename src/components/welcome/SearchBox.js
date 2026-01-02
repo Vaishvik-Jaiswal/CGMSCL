@@ -122,7 +122,7 @@ const SearchBox = forwardRef(function SearchBox({ onSendMessage, onOpenPromptGal
           value={inputValue}
           onChange={(e) => setInputValue(e.target.value)}
           onKeyDown={handleKeyDown}
-          placeholder="Draft an email to about..."
+          placeholder="Enter your prompt here..."
         />
         {isSupported && (
           <button
