@@ -50,7 +50,6 @@ export const globalPromptCards = [
     prompts: [
       'What is the current status of Tender No. XYZ (stage-wise)?',
       'Which tenders are delayed and may impact supply?',
-      'Which items in this tender received single-vendor bids?',
       'Vendor participation summary item-wise for this tender, tender no. 164',
       'Which items have been awarded and which are pending award?',
       'For Item Oxytocin Injection IP, has PO been issued to the vendor?',
