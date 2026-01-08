@@ -4,6 +4,7 @@ import WelcomeScreen from './welcome/WelcomeScreen';
 import ChatArea from './chat/ChatArea';
 import AnalysisPanel from './common/AnalysisPanel';
 import VersionDisclaimer from './common/VersionDisclaimer';
+import { startResponseTimer } from '../utils/feedbackService';
 
 /**
  * Main App Component
@@ -75,6 +76,9 @@ function App() {
       timestamp: new Date().toISOString()
     };
     setChatHistory(prev => [...prev, userMessage]);
+
+    // Start response timer for enhanced feedback tracking
+    startResponseTimer();
 
     // Call backend Lambda for assistant response
     try {

@@ -63,6 +63,13 @@ function SettingsDropdown() {
           window.location.reload();
         }
         break;
+      case 'feedback':
+        // Send feedback via email
+        const email = 'feedback@CGMSCL.com';
+        const subject = 'CGMSCL Feedback';
+        const body = 'Please share your feedback about CGMSCL:\n\n';
+        window.location.href = `mailto:${email}?subject=${encodeURIComponent(subject)}&body=${encodeURIComponent(body)}`;
+        break;
       default:
         break;
     }
@@ -144,6 +151,20 @@ function SettingsDropdown() {
         >
           <i className="fas fa-cog"></i>
           <span>Setting</span>
+        </div>
+        
+        <div className="settings-separator"></div>
+        
+        {/* Feedback */}
+        <div 
+          className="settings-item" 
+          role="menuitem" 
+          data-action="feedback" 
+          tabIndex="0"
+          onClick={() => handleAction('feedback')}
+        >
+          <i className="fas fa-comment-dots"></i>
+          <span>Send Feedback</span>
         </div>
         
         <div className="settings-separator"></div>
