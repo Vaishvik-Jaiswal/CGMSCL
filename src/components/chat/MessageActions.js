@@ -1,8 +1,8 @@
 import React, { useState } from 'react';
 import { showNotification } from '../../utils/notifications';
 import { generateExcelFromData, generateExcelFromResponse } from '../../utils/excelGenerator';
-import { trackDownload } from '../../utils/feedbackService';
-import FeedbackModal from '../modals/FeedbackModal';
+// import { trackDownload } from '../../utils/feedbackService';
+// import FeedbackModal from '../modals/FeedbackModal';
 import excelIcon from '../../assets/images/excel.png';
 
 /**
