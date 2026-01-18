@@ -1,4 +1,4 @@
-import React, { useEffect, useRef } from 'react';
+import React, { useRef } from 'react';
 import MessageBubble from './MessageBubble';
 import { useChartRenderer } from '../../hooks/useChartRenderer';
 import { useMarkdownRenderer } from '../../hooks/useMarkdownRenderer';

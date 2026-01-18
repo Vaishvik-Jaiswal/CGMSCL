@@ -1,4 +1,4 @@
-import React, { useEffect, useRef, useState } from 'react';
+import React, { useEffect, useRef, useState, useCallback } from 'react';
 import { convertVisualizationToECharts } from '../../utils/visualizationUtils';
 
 /**
@@ -43,7 +43,7 @@ function Chart({ visualization, data }) {
   }, [visualization, data]);
 
   // Calculate minimum chart width based on number of x-axis labels
-  const calculateChartWidth = () => {
+  const calculateChartWidth = useCallback(() => {
     if (!visualization || !data || !data.rows) {
       return '100%';
     }
@@ -63,7 +63,7 @@ function Chart({ visualization, data }) {
     
     // Return minimum width if it exceeds container width, otherwise 100%
     return minChartWidth > 600 ? `${minChartWidth}px` : '100%';
-  };
+  }, [visualization, data]);
 
   useEffect(() => {
     if (!visualization || !data || !isChartValid) return;
@@ -198,7 +198,7 @@ function Chart({ visualization, data }) {
         chartInstanceRef.current = null;
       }
     };
-  }, [visualization, data, isChartValid]);
+  }, [visualization, data, isChartValid, calculateChartWidth]);
 
   // Don't render if validation failed - show nothing
   if (!visualization || !data || !isChartValid) {

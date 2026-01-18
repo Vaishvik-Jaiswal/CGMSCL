@@ -199,7 +199,7 @@ export async function generateExcelFromResponse(responseText, filename = 'CGMSCL
       const line = lines[i].trim();
       
       // Check for markdown table separator
-      if (line.match(/^\|[\s\-\|:]+\|$/)) {
+      if (line.match(/^\|[\s\-|:]+\|$/)) {
         inTable = true;
         continue;
       }

@@ -17,16 +17,17 @@ function MessageActions({ message, index, messages = [] }) {
 
   /**
    * Get the query from the previous user message
+   * Currently unused - kept for potential future use with feedback modal
    */
-  const getQuery = () => {
-    // Find the previous user message in the messages array
-    for (let i = index - 1; i >= 0; i--) {
-      if (messages[i] && messages[i].role === 'user') {
-        return messages[i].text;
-      }
-    }
-    return 'Unknown query';
-  };
+  // const getQuery = () => {
+  //   // Find the previous user message in the messages array
+  //   for (let i = index - 1; i >= 0; i--) {
+  //     if (messages[i] && messages[i].role === 'user') {
+  //       return messages[i].text;
+  //     }
+  //   }
+  //   return 'Unknown query';
+  // };
 
   /**
    * Handle copy to clipboard
