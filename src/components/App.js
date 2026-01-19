@@ -84,17 +84,18 @@ function App() {
 
     // Call backend Lambda for assistant response
     try {
-      // Select API endpoint based on backendType state
-      const CHAT_API_URL = backendType === 'OCI' 
-        ? process.env.REACT_APP_OCI_REQUEST 
-        : process.env.REACT_APP_CHAT_API_URL;
+      // Use the same API URL for both backends, passing the provider in the body
+      const CHAT_API_URL = process.env.REACT_APP_CHAT_API_URL;
         
-      console.log(`Sending request to ${backendType} backend:`, CHAT_API_URL);
+      console.log(`Sending request to ${backendType} backend via ${CHAT_API_URL}`);
 
       const response = await fetch(CHAT_API_URL, {
         method: 'POST',
         headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: trimmed })
+        body: JSON.stringify({ 
+          query: trimmed,
+          provider: backendType
+        })
       });
 
       if (!response.ok) {
