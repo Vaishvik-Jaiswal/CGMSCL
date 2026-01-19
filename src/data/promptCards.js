@@ -28,15 +28,11 @@ export const globalPromptCards = [
     title: 'PO Tracking',
     description: 'Analyze purchase orders, supplier KPIs, and delivery performance',
     prompts: [
-      'Which items have supply < 50% of PO quantity?',
-      'Which POs are delayed beyond delivery SLA?',
       'Which POs have partial supply (<50%)?',
-      'Which items have been awarded and which are pending award?',
       'For Item Oxytocin Injection IP , has PO been issued to the vendor?',
       'What is the PO execution status of Item Oxytocin Injection IP?',
       'What is the supply status of PO for Item Multivitamin + Multimineral Syrup 200 ml ?',
       'PO-wise supply status (drug, quantity, percentage supplied).',
-      'POs where partial supplies were made but balance overdue.',
       'Vendors who have defaulted in timely supply.',
       'Which POs are nearing expiry of delivery period?',
     ]
@@ -51,9 +47,7 @@ export const globalPromptCards = [
       'What is the current status of Tender No. XYZ (stage-wise)?',
       'Which tenders are delayed and may impact supply?',
       'Vendor participation summary item-wise for this tender, tender no. 164',
-      'Which items have been awarded and which are pending award?',
-      'For Item Oxytocin Injection IP, has PO been issued to the vendor?',
-      'Which items have supply < 50% of PO quantity?'
+      'For Item Oxytocin Injection IP, has PO been issued to the vendor?'
     ]
   },
   {
@@ -79,8 +73,6 @@ export const globalPromptCards = [
     description: 'Insights and tracking related to QC delays, pending samples, PO-wise status, and supplier-wise QC performance',
     prompts: [
       'Which suppliers have maximum delayed QC samples?',
-      'What is the delay Between warehouse issue and HO receipt?',
-      'What is the QC status PO-wise?',
       'What is the current number of QC pending in warehouse',
       'What is the current number of pending in courier from warehouse',
       'List POs with pending QC reports',
@@ -164,7 +156,6 @@ export const extendedPromptCards = [
       'Supplier performance based on pipeline delays.',
       'Item-wise pipeline quantity summary.',
       'Which tenders currently have pipeline items?',
-      'List pipeline items under tender (Tender Number).',
       'Which pipeline items require urgent follow-up?',
       'Which suppliers have not generated barcodes for pipeline consignments?',
       'Which pipeline consignment has the least number of boxes?'
@@ -187,8 +178,6 @@ export const extendedPromptCards = [
       'Show expiry details of (PO Number).',
       'Item-wise expired quantity summary.',
       'What is the total expired quantity across all years?',
-      'List expired items for the current year.',
-      'Which items expired within the last 30 days?',
       'Year-wise trend of expired items.',
       'Which item has the maximum value of expired stock?',
       'Which Purchase Order (PO) has the highest value of expired stock?'

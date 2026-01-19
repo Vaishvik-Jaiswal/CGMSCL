@@ -6,7 +6,7 @@ import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
  * Search Box Component
  * Microsoft Copilot-style search interface
  */
-const SearchBox = forwardRef(function SearchBox({ onSendMessage, onOpenPromptGallery }, ref) {
+const SearchBox = forwardRef(function SearchBox({ onSendMessage, onOpenPromptGallery, backendType, setBackendType }, ref) {
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef(null);
   const inputValueRef = useRef('');
@@ -157,6 +157,41 @@ const SearchBox = forwardRef(function SearchBox({ onSendMessage, onOpenPromptGal
             <path d="M22 2L15 22L11 13L2 9L22 2Z" stroke="currentColor" strokeWidth="2" strokeLinecap="round" strokeLinejoin="round"/>
           </svg>
         </button>
+          
+        {/* Backend Toggle */}
+        <div style={{ marginLeft: '8px', display: 'flex', alignItems: 'center', border: '1px solid #e0e0e0', borderRadius: '16px', overflow: 'hidden', height: '32px' }}>
+            <button 
+                type="button"
+                onClick={() => setBackendType && setBackendType('AWS')}
+                title="Use AWS Backend"
+                style={{ 
+                    padding: '0 12px', 
+                    height: '100%',
+                    background: backendType === 'AWS' ? '#1F7246' : '#f5f5f5', 
+                    color: backendType === 'AWS' ? '#fff' : '#666',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontSize: '11px',
+                    fontWeight: '600',
+                    transition: 'all 0.2s'
+                }}>AWS</button>
+            <button 
+                type="button"
+                onClick={() => setBackendType && setBackendType('OCI')}
+                title="Use OCI Backend"
+                style={{ 
+                    padding: '0 12px', 
+                    height: '100%',
+                    background: backendType === 'OCI' ? '#1F7246' : '#f5f5f5', 
+                    color: backendType === 'OCI' ? '#fff' : '#666',
+                    border: 'none',
+                    cursor: 'pointer',
+                    fontSize: '11px',
+                    fontWeight: '600',
+                    transition: 'all 0.2s',
+                    borderLeft: '1px solid #e0e0e0'
+                }}>OCI</button>
+        </div>
       </div>
     </div>
   );

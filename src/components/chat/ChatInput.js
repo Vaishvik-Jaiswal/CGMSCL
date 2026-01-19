@@ -5,7 +5,7 @@ import { useSpeechRecognition } from '../../hooks/useSpeechRecognition';
  * Chat Input Component
  * Input area for typing and sending messages
  */
-const ChatInput = forwardRef(function ChatInput({ onSend, isSending = false }, ref) {
+const ChatInput = forwardRef(function ChatInput({ onSend, isSending = false, backendType, setBackendType }, ref) {
   const [inputValue, setInputValue] = useState('');
   const inputRef = useRef(null);
   const inputValueRef = useRef('');
@@ -137,6 +137,45 @@ const ChatInput = forwardRef(function ChatInput({ onSend, isSending = false }, r
           </svg>
         )}
       </button>
+
+      {/* Backend Toggle */}
+      <div style={{ marginLeft: '8px', display: 'flex', alignItems: 'center', border: '1px solid #e0e0e0', borderRadius: '16px', overflow: 'hidden', height: '32px', flexShrink: 0 }}>
+          <button 
+              type="button"
+              onClick={() => setBackendType && setBackendType('AWS')}
+              title="Use AWS Backend"
+              disabled={isSending}
+              style={{ 
+                  padding: '0 12px', 
+                  height: '100%',
+                  background: backendType === 'AWS' ? '#1F7246' : '#fff', 
+                  color: backendType === 'AWS' ? '#fff' : '#666',
+                  border: 'none',
+                  cursor: isSending ? 'not-allowed' : 'pointer',
+                  fontSize: '11px',
+                  fontWeight: '600',
+                  transition: 'all 0.2s',
+                  opacity: isSending ? 0.7 : 1
+              }}>AWS</button>
+          <button 
+              type="button"
+              onClick={() => setBackendType && setBackendType('OCI')}
+              title="Use OCI Backend"
+              disabled={isSending}
+              style={{ 
+                  padding: '0 12px', 
+                  height: '100%',
+                  background: backendType === 'OCI' ? '#1F7246' : '#fff', 
+                  color: backendType === 'OCI' ? '#fff' : '#666',
+                  border: 'none',
+                  cursor: isSending ? 'not-allowed' : 'pointer',
+                  fontSize: '11px',
+                  fontWeight: '600',
+                  transition: 'all 0.2s',
+                  borderLeft: '1px solid #e0e0e0',
+                  opacity: isSending ? 0.7 : 1
+              }}>OCI</button>
+      </div>
     </div>
   );
 });

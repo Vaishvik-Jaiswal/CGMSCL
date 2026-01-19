@@ -8,16 +8,22 @@ import companyLogo from '../../assets/images/company_logo-01.jpg';
  */
 function CompanyLogoMark() {
   return (
-    <div className="company-logo-mark">
+    <a 
+      href="https://www.ailifebot.com" 
+      target="_blank" 
+      rel="noopener noreferrer" 
+      className="company-logo-mark"
+    >
+      <span className="powered-by-text">Powered by</span>
       <img 
         src={companyLogo} 
-        alt="Company Logo" 
+        alt="AI Lifebot" 
         onError={(e) => {
           e.target.onerror = null;
           e.target.style.display = 'none';
         }}
       />
-    </div>
+    </a>
   );
 }
 

@@ -136,35 +136,72 @@
         /* Company Logo Mark Styles */
         .company-logo-mark {
             position: fixed;
-            bottom: 12px;
-            right: 12px;
+            bottom: 16px;
+            right: 20px;
             z-index: 9999;
-            opacity: 0.7;
-            transition: opacity 0.3s ease;
-            pointer-events: none;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+            padding: 8px 16px;
+            background: rgba(255, 255, 255, 0.85);
+            border: 1px solid rgba(0, 0, 0, 0.06);
+            border-radius: 40px;
+            backdrop-filter: blur(10px);
+            -webkit-backdrop-filter: blur(10px);
+            box-shadow: 0 4px 15px rgba(0, 0, 0, 0.05);
+            opacity: 0.9;
+            transition: all 0.3s cubic-bezier(0.34, 1.56, 0.64, 1);
+            text-decoration: none;
+            cursor: pointer;
+            pointer-events: auto;
         }
 
         .company-logo-mark:hover {
             opacity: 1;
+            transform: translateY(-3px);
+            box-shadow: 0 8px 25px rgba(0, 0, 0, 0.1);
+            background: rgba(255, 255, 255, 0.95);
+        }
+
+        .company-logo-mark .powered-by-text {
+            font-size: 11px;
+            font-weight: 600;
+            color: #888;
+            letter-spacing: 0.5px;
+            text-transform: uppercase;
+            transition: color 0.3s ease;
+        }
+
+        .company-logo-mark:hover .powered-by-text {
+            color: #1F7246;
         }
 
         .company-logo-mark img {
-            height: 40px;
+            height: 24px;
             width: auto;
-            max-width: 120px;
+            max-width: 100px;
             object-fit: contain;
-            filter: drop-shadow(0 2px 4px rgba(0,0,0,0.1));
+            transition: transform 0.3s ease;
+        }
+        
+        .company-logo-mark:hover img {
+            transform: scale(1.05);
         }
 
         @media (max-width: 768px) {
             .company-logo-mark {
-                bottom: 8px;
-                right: 8px;
+                bottom: 12px;
+                right: 12px;
+                padding: 6px 12px;
             }
 
             .company-logo-mark img {
-                height: 32px;
-                max-width: 100px;
+                height: 20px;
+                max-width: 80px;
+            }
+            
+            .company-logo-mark .powered-by-text {
+                font-size: 10px;
             }
         }
 

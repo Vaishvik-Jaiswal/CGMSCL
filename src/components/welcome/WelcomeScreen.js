@@ -11,7 +11,7 @@ import logoImage from '../../assets/images/motherson2.png';
  * Welcome Screen Component
  * Main welcome screen with prompt cards and search interface
  */
-function WelcomeScreen({ onSendMessage, onNewChat }) {
+function WelcomeScreen({ onSendMessage, onNewChat, backendType, setBackendType }) {
   const [showExtendedCards, setShowExtendedCards] = useState(false);
   const [showPromptGallery, setShowPromptGallery] = useState(false);
   const [selectedCard, setSelectedCard] = useState(null);
@@ -67,6 +67,8 @@ function WelcomeScreen({ onSendMessage, onNewChat }) {
         ref={searchBoxRef}
         onSendMessage={onSendMessage}
         onOpenPromptGallery={() => setShowPromptGallery(true)}
+        backendType={backendType}
+        setBackendType={setBackendType}
       />
 
       {/* Scrollable Content Section */}

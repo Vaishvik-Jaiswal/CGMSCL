@@ -9,7 +9,7 @@ import PromptGalleryModal from '../modals/PromptGalleryModal';
  * Chat Area Component
  * Main chat interface for conversations
  */
-function ChatArea({ chatHistory, onSendMessage, onReceiveResponse, onNewChat, isSending }) {
+function ChatArea({ chatHistory, onSendMessage, onReceiveResponse, onNewChat, isSending, backendType, setBackendType }) {
   const [messages, setMessages] = useState(chatHistory);
   const [showPromptGallery, setShowPromptGallery] = useState(false);
   const messagesEndRef = useRef(null);
@@ -61,7 +61,13 @@ function ChatArea({ chatHistory, onSendMessage, onReceiveResponse, onNewChat, is
       </div>
 
       <div className="chat-input-wrapper">
-        <ChatInput ref={chatInputRef} onSend={handleSend} isSending={isSending} />
+        <ChatInput 
+          ref={chatInputRef} 
+          onSend={handleSend} 
+          isSending={isSending} 
+          backendType={backendType}
+          setBackendType={setBackendType}
+        />
       </div>
 
       {showPromptGallery && (
