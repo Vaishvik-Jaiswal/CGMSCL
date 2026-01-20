@@ -4205,6 +4205,38 @@
             font-size: 12px;
         }
 
+        /* SQL Toggle Styles */
+        .sql-toggle-btn {
+            background: #f8f9fa;
+            color: #495057;
+            border: 1px solid #ced4da;
+            border-radius: 6px;
+            padding: 6px 12px;
+            font-size: 12px;
+            font-weight: 500;
+            cursor: pointer;
+            transition: all 0.2s ease;
+            margin-bottom: 8px;
+        }
+
+        .sql-toggle-btn:hover {
+            background: #e9ecef;
+            border-color: #adb5bd;
+        }
+
+        .sql-query-block {
+            background: #2d2d2d;
+            color: #f8f8f2;
+            padding: 12px;
+            border-radius: 8px;
+            font-family: 'Courier New', Courier, monospace;
+            font-size: 13px;
+            line-height: 1.4;
+            overflow-x: auto;
+            margin: 8px 0;
+            border: 1px solid #444;
+        }
+
         /* Analysis Dropdown Styles */
         .analysis-dropdown {
             position: relative;
