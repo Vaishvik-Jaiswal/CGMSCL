@@ -18,7 +18,6 @@ function App() {
   const [showChat, setShowChat] = useState(false);
   const [chatHistory, setChatHistory] = useState([]);
   const [isSending, setIsSending] = useState(false);
-  const [backendType, setBackendType] = useState('AWS'); // 'AWS' or 'OCI'
 
   // Load chat history from localStorage on mount
   useEffect(() => {
@@ -85,6 +84,7 @@ function App() {
 
     // Call backend Lambda for assistant response
     try {
+<<<<<<< HEAD
       let data;
       if (backendType === 'OCI') {
         // Directly call OCI API Gateway endpoint
@@ -101,6 +101,12 @@ function App() {
         }
         data = await response.json();
         console.log('Raw OCI API Response:', data);
+=======
+      // Always use AWS backend as per requirements
+      const CHAT_API_URL = process.env.REACT_APP_CHAT_API_URL;
+        
+      console.log(`Sending request to AWS backend:`, CHAT_API_URL);
+>>>>>>> 9745869f6c39a8af5cdf8d158f9e584ea57c8775
 
         // Use normalizer utility for OCI response
         data = normalizeOCIResponse(data);
@@ -215,8 +221,6 @@ function App() {
           <WelcomeScreen 
             onSendMessage={handleSendMessage}
             onNewChat={handleNewChat}
-            backendType={backendType}
-            setBackendType={setBackendType}
           />
         )}
         
@@ -227,8 +231,6 @@ function App() {
             onReceiveResponse={handleReceiveResponse}
             onNewChat={handleNewChat}
             isSending={isSending}
-            backendType={backendType}
-            setBackendType={setBackendType}
           />
         )}
       </div>
