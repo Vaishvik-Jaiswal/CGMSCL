@@ -6,9 +6,26 @@ import AnalysisToggle from './AnalysisToggle';
  * Top Right Controls Component
  * Contains New Chat, Analysis toggle, and Settings
  */
-function TopRightControls({ onNewChat }) {
+function TopRightControls({ onNewChat, backendType, setBackendType }) {
+  const toggleBackend = () => {
+    if (setBackendType) {
+      setBackendType(prev => prev === 'AWS' ? "OCI" : "AWS");
+    }
+  };
+
   return (
     <div className="top-right-controls">
+      {/* Backend Toggle (AWS/OCI) */}
+      <button 
+        className={`backend-toggle-btn ${backendType === 'OCI' ? 'active-oci' : 'active-aws'}`}
+        onClick={toggleBackend}
+        aria-label={`Current Provider: ${backendType}`}
+        title="Toggle between AWS (Claude) and OCI (Llama)"
+      >
+        <span className="toggle-label">Provider:</span>
+        <span className="toggle-value">{backendType || 'AWS'}</span>
+      </button>
+
       {/* New Chat Button */}
       <button
         className="new-chat-btn"

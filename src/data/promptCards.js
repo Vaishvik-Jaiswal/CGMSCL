@@ -4,6 +4,18 @@
  */
 export const globalPromptCards = [
   {
+<<<<<<< HEAD
+    id: 'drug-consumable-payments',
+    type: 'main',
+    icon: '💊',
+    title: 'Drug/Consumable Cards',
+    description: 'Track payment statuses for drug/consumable files and recent QC-approved POs',
+    prompts: [
+      'Fit Files Payment Pending at Section',
+      'UnFit Files Payment Pending at Section',
+      'Paid field payment status this month',
+      'Paid field payment status from 01/01/25 to 02/02/25',
+=======
     id: 'drug_consumable_payment_status',
     type: 'main',
     icon: '💊',
@@ -14,6 +26,7 @@ export const globalPromptCards = [
       'Unfit files payment pending at Section',
       'Paid field payment status this month',
       'Paid field payment status from 1/01/25 to 2/02/25',
+>>>>>>> 9745869f6c39a8af5cdf8d158f9e584ea57c8775
       'How many POs are unpaid with most recent last QC passed date'
     ]
   },

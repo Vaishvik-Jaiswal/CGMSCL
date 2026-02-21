@@ -5,6 +5,7 @@ import ChatArea from './chat/ChatArea';
 import AnalysisPanel from './common/AnalysisPanel';
 import VersionDisclaimer from './common/VersionDisclaimer';
 import CompanyLogoMark from './common/CompanyLogoMark';
+import { normalizeOCIResponse, extractData } from '../utils/responseNormalizer';
 // import { startResponseTimer } from '../utils/feedbackService';
 
 /**
@@ -83,79 +84,62 @@ function App() {
 
     // Call backend Lambda for assistant response
     try {
+<<<<<<< HEAD
+      let data;
+      if (backendType === 'OCI') {
+        // Directly call OCI API Gateway endpoint
+        const OCI_API_URL = "https://kkthcckqby2ta244ytlu4r25xi.apigateway.ap-hyderabad-1.oci.customer-oci.com/api/test";
+        console.log(`Sending request to OCI API Gateway: ${OCI_API_URL}`);
+        const response = await fetch(OCI_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ query: trimmed })
+        });
+        if (!response.ok) {
+          const errText = await response.text();
+          throw new Error(`OCI API error ${response.status}: ${errText}`);
+        }
+        data = await response.json();
+        console.log('Raw OCI API Response:', data);
+=======
       // Always use AWS backend as per requirements
       const CHAT_API_URL = process.env.REACT_APP_CHAT_API_URL;
         
       console.log(`Sending request to AWS backend:`, CHAT_API_URL);
+>>>>>>> 9745869f6c39a8af5cdf8d158f9e584ea57c8775
 
-      const response = await fetch(CHAT_API_URL, {
-        method: 'POST',
-        headers: { 'Content-Type': 'application/json' },
-        body: JSON.stringify({ query: trimmed })
-      });
-
-      if (!response.ok) {
-        const errText = await response.text();
-        throw new Error(`API error ${response.status}: ${errText}`);
+        // Use normalizer utility for OCI response
+        data = normalizeOCIResponse(data);
+      } else {
+        // Use the same API URL for AWS backend
+        const CHAT_API_URL = process.env.REACT_APP_CHAT_API_URL;
+        console.log(`Sending request to ${backendType} backend via ${CHAT_API_URL}`);
+        const response = await fetch(CHAT_API_URL, {
+          method: 'POST',
+          headers: { 'Content-Type': 'application/json' },
+          body: JSON.stringify({ 
+            query: trimmed,
+            provider: backendType
+          })
+        });
+        if (!response.ok) {
+          const errText = await response.text();
+          throw new Error(`API error ${response.status}: ${errText}`);
+        }
+        data = await response.json();
       }
 
-      const data = await response.json();
-      console.log('API Response Data (Full):', JSON.stringify(data, null, 2));
-      console.log('API Response Data (Object):', data);
-      
-      // Check multiple possible paths for data rows
-      // API structure: data.data.result.rows (new format) or data.data.rows (old format)
-      let possibleRows = null;
-      if (Array.isArray(data.data?.result?.rows) && data.data.result.rows.length > 0) {
-        possibleRows = data.data.result.rows;
-      } else if (Array.isArray(data.data?.rows) && data.data.rows.length > 0) {
-        possibleRows = data.data.rows;
-      } else if (Array.isArray(data.data) && data.data.length > 0) {
-        possibleRows = data.data;
-      } else if (Array.isArray(data.rows) && data.rows.length > 0) {
-        possibleRows = data.rows;
-      }
-      
-      // Check multiple possible paths for columns
-      // API structure: data.data.result.columns (new format) or data.data.columns (old format)
-      let possibleColumns = null;
-      if (Array.isArray(data.data?.result?.columns) && data.data.result.columns.length > 0) {
-        possibleColumns = data.data.result.columns;
-      } else if (Array.isArray(data.data?.columns) && data.data.columns.length > 0) {
-        possibleColumns = data.data.columns;
-      } else if (Array.isArray(data.data?.columnNames) && data.data.columnNames.length > 0) {
-        possibleColumns = data.data.columnNames;
-      } else if (Array.isArray(data.columns) && data.columns.length > 0) {
-        possibleColumns = data.columns;
-      }
-      
-      // Check what data.data actually contains
-      console.log('Data structure analysis:', {
-        hasData: !!data.data,
-        hasResult: !!data.data?.result,
-        hasResultRows: !!data.data?.result?.rows,
-        hasResultColumns: !!data.data?.result?.columns,
-        resultRowsLength: data.data?.result?.rows?.length || 0,
-        resultColumnsLength: data.data?.result?.columns?.length || 0,
-        // Old format checks
-        hasRows: !!data.data?.rows,
-        hasColumns: !!data.data?.columns,
-        rowsLength: data.data?.rows?.length || 0,
-        columnsLength: data.data?.columns?.length || 0,
-        // Found values
-        foundRows: !!possibleRows,
-        foundRowsLength: possibleRows?.length || 0,
-        foundColumns: !!possibleColumns,
-        foundColumnsLength: possibleColumns?.length || 0
+      // Extract rows and columns using utility
+      const { rows: possibleRows, columns: possibleColumns } = extractData(data);
+
+      console.log('Final data extraction:', {
+        hasRows: !!possibleRows,
+        rowsLength: possibleRows?.length || 0,
+        hasColumns: !!possibleColumns,
+        columnsLength: possibleColumns?.length || 0,
+        sqlQuery: data.sql_query
       });
-      
-      console.log('Data structure for Chart:', {
-        hasVisualization: !!data.visualization,
-        visualization: data.visualization,
-        chartType: data.visualization?.chartType
-      });
-      
-      // Check if visualization config has embedded data
+
       let visualizationDataRows = null;
       let visualizationDataColumns = null;
       if (data.visualization?.data) {
@@ -166,23 +150,34 @@ function App() {
           visualizationDataColumns = data.visualization.data.columns;
         }
       }
+
+      const finalDataRows = possibleRows || visualizationDataRows || null;
+      const finalDataColumns = possibleColumns || visualizationDataColumns || null;
       
-      // Use visualization data if no other data found
-      const finalDataRows = possibleRows || visualizationDataRows || data.data?.rows || (Array.isArray(data.data) ? data.data : null) || null;
-      const finalDataColumns = possibleColumns || visualizationDataColumns || data.data?.columns || data.data?.columnNames || data.columns || null;
-      
+      const isSuccessResponse = data.response === 'Query executed successfully.' || 
+                               (typeof data.response === 'string' && data.response.includes('successfully'));
+
       const assistantMessage = {
         role: 'assistant',
-        text: data.response || 'No response received.',
-        sql_query: data.sql || null,
+        text:
+          (isSuccessResponse && finalDataRows && finalDataColumns && Array.isArray(finalDataRows) && Array.isArray(finalDataColumns))
+            ? (
+                // Render a markdown-based report for the data
+                (data.analysis ? `${data.analysis}\n\n` : '') +
+                (data.title ? `### ${data.title}\n\n` : '') +
+                (data.subtitle ? `#### ${data.subtitle}\n\n` : '') +
+                '| ' + finalDataColumns.join(' | ') + ' |\n' +
+                '| ' + finalDataColumns.map(() => '---').join(' | ') + ' |\n' +
+                finalDataRows.map(row => '| ' + (Array.isArray(row) ? row.join(' | ') : Object.values(row).join(' | ')) + ' |').join('\n') +
+                (data.insights ? `\n\n### ${data.insightsHeader || 'Key Insights'}\n${Array.isArray(data.insights) ? data.insights.map(i => '- ' + i).join('\n') : data.insights}` : '') +
+                (data.recentVendorDistribution ? `\n\n### Recent Vendor Distribution\n${Array.isArray(data.recentVendorDistribution) ? data.recentVendorDistribution.map(v => '- ' + v).join('\n') : data.recentVendorDistribution}` : '')
+              )
+            : (data.response || 'No response received.'),
+        sql_query: data.sql_query || data.sql || null,
         suggestions: finalDataRows || null,
-        // Store data rows for Excel export (try multiple paths including visualization data)
         dataRows: finalDataRows,
-        // Try multiple possible locations for column names
         dataColumns: finalDataColumns,
-        // Show Excel button if we have tabular data
         excel_download: !!(finalDataRows && Array.isArray(finalDataRows) && finalDataRows.length > 0),
-        // Store visualization config for chart rendering
         visualization: data.visualization || null,
         timestamp: new Date().toISOString()
       };

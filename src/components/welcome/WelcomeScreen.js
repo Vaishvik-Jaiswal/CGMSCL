@@ -52,6 +52,8 @@ function WelcomeScreen({ onSendMessage, onNewChat }) {
       {/* Top Right Controls */}
       <TopRightControls 
         onNewChat={onNewChat}
+        backendType={backendType}
+        setBackendType={setBackendType}
       />
 
       <div className="welcome-header">
